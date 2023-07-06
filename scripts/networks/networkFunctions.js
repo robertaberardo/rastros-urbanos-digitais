@@ -440,11 +440,11 @@ function annotateNetworkChart() {
 	var updateLayout = {
 		annotations: [
 			{
-				x: 15800,
+				x: 16000,
 				y: index75,
 				xref: 'x',
 				yref: 'y',
-				text: 'percentil 75 <br>' + percentile75.toFixed(1).toString(),
+				text: 'percentil 75 ' + percentile75.toFixed(1).toString() + '<br> ',
 				font: {
 					family: 'Lora',
 					color: brownColor

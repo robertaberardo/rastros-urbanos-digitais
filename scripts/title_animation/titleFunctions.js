@@ -41,7 +41,7 @@ function animateTitle() {
             var distance = turf.distance(start, destinationPoint);
 
             // var duration = 2000; // Duration of the animation in milliseconds
-            var duration = 1000; // Só para acelerar testes
+            var duration = 100; // Só para acelerar testes
             var steps = 30; // Number of steps for the animation
 
             var stepDistance = distance / steps;

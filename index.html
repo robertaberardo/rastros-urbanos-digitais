@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>rastros urbanos digitais | Roberta Berardo</title>
+    <title>Rastros Urbanos Digitais</title>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
 
@@ -231,7 +231,7 @@
 
         .mapboxgl-ctrl-top-right {
             right: 1%;
-            top: 40% ;
+            top: 40%;
         }
 
         .mapboxgl-ctrl-scale {
@@ -240,6 +240,7 @@
             border-top: #333;
             color: #71391c
         }
+
         .mapboxgl-ctrl-icon {
             filter: brightness(1000%);
             opacity: 0.8;
@@ -280,8 +281,8 @@
             opacity: 0;
             font-size: medium;
             transition: opacity 5s ease-in-out;
-            text-align: center;     
-            color: #8aa4b5  
+            text-align: center;
+            color: #8aa4b5
         }
 
         .reset-button {
@@ -334,6 +335,8 @@
 
         var colors = [];
         var brownColor = '#71391C';
+
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         // var brownClearColor = '#a8785e';
         // brownColor = brownClearColor
 
@@ -465,7 +468,7 @@
                     map.setPaintProperty('heatmap-layer', 'heatmap-opacity', 0.5)
                     map.flyTo({
                         essencial: true,
-                        durantion: 3000,
+                        duration: 3000,
                         zoom: 13.8,
                         center: [-46.68909055256026, -23.56751326250103]
                     })
@@ -522,9 +525,9 @@
                     var coordinates = [-46.640614524898524, -23.54209992129087]
                     map.flyTo({
                         center: coordinates,
-                        zoom: 15, // optional zoom level
-                        speed: 1.5, // optional fly animation speed
-                        curve: 1, // optional fly animation curve
+                        essencial: true,
+                        duration: 3000,
+                        zoom: 15,
                     })
 
                     map.addLayer({
@@ -590,7 +593,7 @@
 
                     let tweetouText = "";
 
-                    map.once("moveend", () => {
+                    function action() {
                         setTimeout(() => {
                             upperLeftText.style.opacity = 1;
                             tweetouText += "Um lugar é marcado por aqueles que o ocupam:<br><br>";
@@ -623,8 +626,10 @@
                                 }
                             }, time_);
                         });
-                    });
+                    }
 
+
+                    protectReduceMotion(action, 3600)
 
                 }
             },
@@ -655,9 +660,9 @@
                         // { path: 1265649820225753089, color: 'hsla(120, 94%, 22%, 1)' },
                         // { path: 3724233975, color: 'darkblue' },
                         // { path: 15410917, color: '#af0451' },
-                        { path: 3724233975, color: tweetData[0].color, strokeColor: tweetData[0].strokeColor},
+                        { path: 3724233975, color: tweetData[0].color, strokeColor: tweetData[0].strokeColor },
                         { path: 15410917, color: tweetData[2].color, strokeColor: tweetData[2].strokeColor },
-                        { path: 1265649820225753089, color: tweetData[1].color, strokeColor: tweetData[1].strokeColor  },
+                        { path: 1265649820225753089, color: tweetData[1].color, strokeColor: tweetData[1].strokeColor },
                         { path: 52500909, color: '#DEBF7C', strokeColor: '#D09C3E' },
                         { path: 299835847, color: '#A6BC9E', strokeColor: '#498334' }
                         // { path: 299835847, color: '#C0C491', strokeColor: '#57956E' }
@@ -667,6 +672,7 @@
                     map.flyTo({
                         center: [-46.759236634449536, -23.600183585556806],
                         zoom: initialMapZoom,
+                        duration: 2000,
                         essential: true
                     })
 
@@ -674,10 +680,10 @@
 
 
                     // TODO: remover, temporário
-                    const delay = 2500; // Delay of 1 second (1000 milliseconds)
 
+                    protectReduceMotion(() => {
+                        const delay = 2500; // Delay of 1 second (1000 milliseconds)
 
-                    map.once('moveend', () => {
                         leftText.style.opacity = 1;
                         leftText.innerHTML = `<span style="color:${tweetData[0].strokeColor}">${tweetData[0].name}</span>, ` +
                             `<span style="color:${tweetData[1].strokeColor}">${tweetData[1].name}</span>, e ` +
@@ -686,11 +692,7 @@
                         setTimeout(() => {
                             leftText.innerHTML = leftText.innerHTML.slice(0, -4) + "Assim como outros que visitaram o Bar Brahma."
                         }, delay * 3)
-                    });
 
-
-
-                    map.once('moveend', () => {
                         let index = 0;
 
                         function addPathWithDelay() {
@@ -705,7 +707,37 @@
                         }
 
                         addPathWithDelay();
-                    });
+                    }, 2500)
+
+
+                    // map.once('moveend', () => {
+                    //     const delay = 2500; // Delay of 1 second (1000 milliseconds)
+
+                    //     leftText.style.opacity = 1;
+                    //     leftText.innerHTML = `<span style="color:${tweetData[0].strokeColor}">${tweetData[0].name}</span>, ` +
+                    //         `<span style="color:${tweetData[1].strokeColor}">${tweetData[1].name}</span>, e ` +
+                    //         `<span style="color:${tweetData[2].strokeColor}">${tweetData[2].name}</span> ` +
+                    //         `também registraram suas visitas em outros lugares da cidade.<br><br>`
+                    //     setTimeout(() => {
+                    //         leftText.innerHTML = leftText.innerHTML.slice(0, -4) + "Assim como outros que visitaram o Bar Brahma."
+                    //     }, delay * 3)
+
+                    //     let index = 0;
+
+                    //     function addPathWithDelay() {
+                    //         if (index < paths.length) {
+                    //             const { path, color, strokeColor } = paths[index];
+                    //             addPathFromUser(path, color, strokeColor);
+                    //             index++;
+                    //             setTimeout(addPathWithDelay, delay);
+                    //         } else if (index === paths.length) {
+                    //             enableForwardButton();
+                    //         }
+                    //     }
+
+                    //     addPathWithDelay();
+                    // });
+
                 }
 
 
@@ -800,12 +832,12 @@
 
 
                         map.flyTo({
+                            essencial: true,
                             pitch: 63.5, //85, // pitch in degrees
                             bearing: -15, // 0, // bearing in degrees
                             zoom: 15, // 16.5,
                             duration: 5000,
                             center: [-46.64143429207843, -23.542134345326673],
-                            essencial: true
                         })
 
 
@@ -824,9 +856,12 @@
                         window.deckGLBrahma = addDeckGL(filteredData, 'network-text-layer-1');
                         addDeckGLAnnotation(filteredData);
 
-                        map.once('moveend', () => {
-                            enableForwardButton();
-                        })
+
+                        protectReduceMotion(enableForwardButton, 4000)
+
+                        // map.once('moveend', () => {
+                            // enableForwardButton();
+                        // })
 
                     }, 3000)
 
@@ -834,6 +869,7 @@
             },
             {
                 onInit: () => {
+                    disableForwardButton();
 
                     getSymbolLayers().forEach(l => {
                         map.setPaintProperty(l, 'text-opacity', 1);
@@ -859,29 +895,36 @@
                         pitch: 32, //43, //45 // pitch in degrees
                         bearing: -35.8,//-51, //-55 // bearing in degrees
                         zoom: 10.5,
-                        center: {lng: -46.654636628016846, lat: -23.60001019642887}, //[-46.630898903953494, -23.672758159095864],
-                        durantion: 3000,
+                        center: { lng: -46.654636628016846, lat: -23.60001019642887 }, //[-46.630898903953494, -23.672758159095864],
+                        duration: 3000,
                         essencial: true,
-                        curve: 1, 
+                        curve: 1,
                         easing: function (t) {
                             return t;
                         }
                     })
 
+                    addDeckGL(filteredData, 'network-text-layer-all')
 
-                    map.once('moveend', () => {
-                        // enableMapInteraction();
-
-                        upperLeftText.innerHTML = "Esse texto explica um monte de coisa. <br><br> Mapa liberado para interação.";
-
+                    upperLeftText.innerHTML = "Esse texto explica um monte de coisa. <br><br> Mapa liberado para interação.";
                         // remove o item do deckGL
-                        deckGLBrahma.finalize();
-                    })
+                    deckGLBrahma.finalize();
+                        
 
-                    setTimeout(() => {
-                        columnsRadius = 150;
-                        addDeckGL(filteredData, 'network-text-layer-all')
-                    }, 0)
+
+                    setTimeout(()=> {
+                        enableForwardButton();
+                    }, 3000)
+
+                    protectReduceMotion(enableForwardButton, 2000)
+
+
+                    // map.once('moveend', () => {
+                    //     // enableMapInteraction();
+                    //     upperLeftText.innerHTML = "Esse texto explica um monte de coisa. <br><br> Mapa liberado para interação.";
+                    //     // remove o item do deckGL
+                    //     deckGLBrahma.finalize();
+                    // })
 
 
 
@@ -891,7 +934,7 @@
                     //         bearing: -55, // bearing in degrees
                     //         zoom: 10.4,
                     //         center: [-46.630898903953494, -23.672758159095864],
-                    //         durantion: 3000,
+                    //         duration: 3000,
                     //         essencial: true,
                     //         curve: 1, // Change the speed at which it zooms out.
                     //         // This can be any easing function: it takes a number between
@@ -912,6 +955,8 @@
             },
             {
                 onInit: () => {
+                    columnsRadius = 300;
+
                     var choice = 'Comando da 2ª Região Militar (-23.579597944073882, -46.65751516847958)'
                     networkFromDeckGL(choice, flyTo = false)
                     // [-46.65751516847958, -23.579597944073882]
@@ -939,23 +984,23 @@
             },
             {
                 onInit: () => {
-                    map.flyTo({
-                        zoom: 11.3,
-                        center: { lng: -46.669018864493154, lat: -23.582620989869596 },
-                        durantion: 3000,
-                        essencial: true,
-                        curve: 1,
-                        easing: function (t) {
-                            return t;
-                        }
-                    })
+                    // map.flyTo({
+                    //     zoom: 11.3,
+                    //     center: { lng: -46.669018864493154, lat: -23.582620989869596 },
+                    //     duration: 3000,
+                    //     essencial: true,
+                    //     curve: 1,
+                    //     easing: function (t) {
+                    //         return t;
+                    //     }
+                    // })
 
 
                     function resetDeckGLView() {
                         columnsRadius = 50;
 
                         if (map.getLayer('network-lines-interactive-layer')) { map.removeLayer('network-lines-interactive-layer') };
-                        if (map.getLayer('network-points-interactive-layer')) {map.removeLayer('network-points-interactive-layer')}
+                        if (map.getLayer('network-points-interactive-layer')) { map.removeLayer('network-points-interactive-layer') }
 
                         deckOverlay.setProps({
                             layers: [createNewColumnLayer(true, filteredData, null)]
@@ -998,10 +1043,13 @@
                         pitch: 0,
                         bearing: 0,
                         center: [-46.50146509120782, -23.764062538902365],
-                        zoom: 12.5
+                        zoom: 12.5,
+                        duration: 2000
                     })
 
-                    map.once('moveend', () => {
+
+
+                    setTimeout( () => {
                         var textContainer = document.createElement('div');
                         textContainer.id = 'final-text';
                         textContainer.innerHTML = '.';
@@ -1011,9 +1059,9 @@
                         var textBottomContainer = document.createElement('div');
                         textBottomContainer.id = 'final-bottom-text';
                         textBottomContainer.innerHTML = 'Trabalho Final de Graduação<br>' +
-                        'Roberta Saldanha da Silva Berardo Gomes<br>' + 
-                        'Orientador Prof. Dr. Leandro Velloso<br>' +
-                        '2023';
+                            'Roberta Saldanha da Silva Berardo Gomes<br>' +
+                            'Orientador Prof. Dr. Leandro Velloso<br>' +
+                            '2023';
                         document.body.appendChild(textBottomContainer);
 
                         setTimeout(() => {
@@ -1023,7 +1071,8 @@
                         }, 500)
 
 
-                    })
+                    }, 2000)
+                    
 
 
                 }

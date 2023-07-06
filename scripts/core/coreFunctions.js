@@ -208,6 +208,26 @@ function addLegend(stops) {
 }
 
 
+function protectReduceMotion(f, timeout) {
+  let here = false;
+
+  map.once("moveend", () => {
+      if (here === false) {
+          here = true;
+          f();
+      }
+  });
+
+  setTimeout(() => {
+      if (here === false) {
+          here = true; 
+          f();
+          
+      }
+  }, timeout)
+}
+
+
 function addGradientLegend(stops) {
   legend.innerHTML = null;
 
