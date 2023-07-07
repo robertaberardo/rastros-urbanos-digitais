@@ -38,8 +38,7 @@ function animateTweetsByDate() {
 
   // leftText.style.opacity = 1;
   // leftText.style.opacity = 0.5;
-  leftText.innerText = 'Esse metadado geográfico pode ser extraído permitindo que ele seja reprojetado no território.'
-  rightText.innerText = 'Tweets de Janeiro de 2022'
+
   // todo: remover dados da camada anterior
 
   started = true

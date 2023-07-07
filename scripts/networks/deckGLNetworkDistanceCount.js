@@ -183,7 +183,7 @@ function addDeckGLAnnotation(data) {
         data,
         pickable: true,
         getPosition: d => [d.lon, d.lat, d.count_un_a * 30],
-        getText: d => 'cor:\npercentil 75 \n rede',
+        getText: d => 'cor:\nabrangência da\n rede',
         getSize: 10,
         getAngle: 0,
         fontFamily: 'Lora',

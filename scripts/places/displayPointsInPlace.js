@@ -94,15 +94,22 @@ function displayPointsInPlace(geojsonPlace, zoom) {
   }];
 
   var layout = {
+    title: {
+      text: 'Distribuição dos tweets por dia | Gráfico Interativo',
+      font: {
+        family: 'Lora',
+        size: 14
+      }
+    },
     width: 400, // Set the width of the chart
     height: 200, // Set the height of the chart
     plot_bgcolor: 'rgba(0, 0, 0, 0)', // Set the background color of the plot area
     paper_bgcolor: 'rgba(0, 0, 0, 0)', // Set the background color of the entire chart
     xaxis: {
-      fixedrange:true
+      fixedrange: true
     },
     yaxis: {
-      fixedrange:true,
+      fixedrange: true,
       dtick: 20,
       range: [0, 100]
     },

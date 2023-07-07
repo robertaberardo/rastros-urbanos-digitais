@@ -370,9 +370,17 @@ function addNetworkChart() {
 			hovermode: false,
 			
 		},
+		font: {
+			color: brownColor // Set the font color
+		  },
 		xaxis: {
 			zeroline: false,
-			title: 'Distâncias',
+			title: {
+				text: 'Distribuição dos comprimentos dos vincúlos',
+				font: {
+					family: 'Lora'
+				}
+			},
 			fixedrange:true
 
 		},
@@ -440,11 +448,11 @@ function annotateNetworkChart() {
 	var updateLayout = {
 		annotations: [
 			{
-				x: 16000,
+				x: 17000,
 				y: index75,
 				xref: 'x',
 				yref: 'y',
-				text: 'percentil 75 ' + percentile75.toFixed(1).toString() + '<br> ',
+				text: 'abrangência da rede ' + percentile75.toFixed(1).toString() + '<br> ',
 				font: {
 					family: 'Lora',
 					color: brownColor

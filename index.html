@@ -80,7 +80,6 @@
             margin: 0;
             padding: 0;
             color: rgb(113, 57, 28);
-            ;
             /*  #a8785e */
             font-family: Lora
         }
@@ -121,9 +120,9 @@
             left: 35px;
             /* padding: 5px; */
             font-size: large;
-            z-index: 1;
+            z-index: 4;
             width: 400px;
-            opacity: 0;
+            /* opacity: 0; */
             text-align: center;
             align-self: center;
             transition: opacity 2s;
@@ -132,17 +131,29 @@
             transform: translate(0, -50%);
         }
 
+        #left-text-span{
+            background-color: rgb(232 227 223 / 40%);
+            opacity: 0;
+        }
+
+        #upper-left-text-span{
+            background-color: rgb(232 227 223 / 40%);
+            opacity: 0;
+        }
+
         #left-text {
             top: 50%;
         }
 
         #upper-left-text {
             top: 20%;
+            /* opacity: 0; */
             transform: translate(0, 0);
         }
 
         #lower-left-text {
             top: 60%;
+            opacity: 0;
         }
 
         #right-text {
@@ -202,7 +213,8 @@
             right: 4%;
             /* background: #ffffff25; */
             /* background-color: rgba(225, 212, 204, 0.5); */
-            background-color: rgba(247, 245, 243, 0.5);
+            /* background-color: rgba(247, 245, 243, 0.5); */
+            background-color: rgb(232 227 223 / 50%);;
             overflow: auto;
             border-radius: 3px;
             padding: 10px;
@@ -313,9 +325,10 @@
 <body>
     <div id="map"></div>
     <div class="container">
-        <div class='lt' id="upper-left-text"></div>
-        <div class='lt' id="left-text"></div>
-        <div class='lt' id="lower-left-text"></div>
+        <div class='lt' id="upper-left-text"><span id="upper-left-text-span"></span></div>
+        <div class='lt' id="left-text"><span id="left-text-span"></span></div>
+        <!-- <div class='lt' id="left-text"><span class="lt-span">hello  <br/> hello</span></div> -->
+        <!-- <div class='lt' id="lower-left-text"></div> -->
     </div>
     <div id="right-text"></div>
     <div id='legend'></div>
@@ -359,10 +372,11 @@
         });
 
 
-        const forwardButton = document.getElementById('forward-button');
-        const leftText = document.getElementById('left-text');
-        const lowerLeftText = document.getElementById('lower-left-text');
-        const upperLeftText = document.getElementById('upper-left-text');
+        const forwardButton = document.getElementById('forward-button');        
+        const leftTextDiv = document.getElementById('left-text');
+        const leftText = document.getElementById('left-text-span');
+        // const lowerLeftText = document.getElementById('lower-left-text');
+        const upperLeftText = document.getElementById('upper-left-text-span');
         const mapContainer = document.getElementById('map');
         const legend = document.getElementById('legend');
         const rightText = document.getElementById('right-text');
@@ -384,8 +398,10 @@
 
                     setTimeout(() => {
                         leftText.style.opacity = 1;
-                        leftText.innerText = "Ao twittar um autor pode escolher compartilhar a localização no momento do Tweet," +
-                            " podendo ser a localização exata do GPS ou uma localização contextual, como um estabelecimento, um bairro.";
+                        leftText.innerHTML = "Ao twittar um autor pode escolher compartilhar a localização no momento do Tweet," +
+                            " podendo ser a localização exata do GPS ou uma localização contextual, como um estabelecimento, um bairro.<br><br>" 
+                            // + 
+                            // "Cada ponto representa uma localização registrada, podendo representar múltiplos tweets.";
                     }, 2000)
 
                     setTimeout(() => {
@@ -428,6 +444,11 @@
                     disableForwardButton();
                     animateTweetsByDate();
                     enableForwardButtonOnDataIdle();
+
+                    leftText.innerText = 'Esse dado geográfico pode ser extraído permitindo que ele seja projetado no território.'
+  
+                    rightText.style.opacity =1;
+                    rightText.innerText = 'Tweets de Janeiro de 2022'
                 }
             },
             {
@@ -436,7 +457,7 @@
 
                     animateTweetsByMonth();
                     var content = 'Durante o ano de 2022, 194.736* tweets marcaram a cidade de São Paulo, deixando o rastro de 30.365* usuários únicos.' +
-                        '<br><br> <span style="font-size: small;">Dados coletados em xx/xx/xx, após limpeza inicial.</span>';
+                        '<br><br><span style="font-size: small;">*Dados após limpeza inicial.</span>';
                     leftText.innerHTML = content
                     // leftText.innerText = '' +
                     // "Durante o ano de 2022, 202.100 tweets marcaram a cidade, deixando o rastro de 30365 usuários únicos."
@@ -456,9 +477,13 @@
 
                     addAllTweetsLegend();
 
-                    leftText.innerHTML = "A distribuição desses Tweets nos permite fazer leituras sobre a atividade no território." +
-                        "<br><br><br> Mapa liberado para interação";
+                    leftText.innerHTML = "A distribuição desses Tweets nos permite fazer leituras sobre a atividade social no território.<br><br>";
+
+                    leftText.innerHTML += 'Mapa liberado para a interação!<br>Explore-o antes de avançar.<br>'+
+                    'É possível dar zoom no mapa através do scroll do mouse e controles na lateral direita.'
+
                     rightText.innerText = 'Densidade de tweets por localização'
+
                 }
             },
             {
@@ -472,8 +497,11 @@
                         zoom: 13.8,
                         center: [-46.68909055256026, -23.56751326250103]
                     })
-                    leftText.innerHTML = "Os bairros de Pinheiros e Vila Madalena são marcados por um dinamismo de uso misto," +
-                        " enquanto o Jardim Eropa, bairro residencial, quase não aparece nos dados."
+
+
+                    leftText.innerHTML = "Bairros centrais são, em geral, os mais movimentados no Twitter, mas aproximando nosso olhar, notamos diferenças nessa distribuição. " +
+                    "Pinheiros e Vila Madalena são marcados por um dinamismo social, com bares, restaurantes, refletido no Twitter. " +
+                    "Porém ao lado, o Jardim Eropa, bairro predominantemente residencial, aparece como um vazio nos dados."
 
 
                 }
@@ -481,14 +509,15 @@
             {
                 onInit: () => {
                     displayPointsInPlace(paulistaLocationData, 14.5)
-                    leftText.innerHTML = "" +
-                        " reflete momentos importantes na cidade.<br>" +
-                        "Centro cultural e social de São Paulo, a Paulista é palco de manifestações diversas e seus picos de ativividades refletem momentos importantes. " +
-                        "Manifestação 7 de Setembro<br>" +
-                        "Parada Gay 19 de Junho<br>" +
-                        "Primeiro turno 02 de outoubro<br>" +
-                        "Segundo turno 0 de outubro<br><br>" +
-                        "* Cada ponto representa um localização registrada, sendo que representa múltiplos tweets."
+
+                    leftTextDiv.style.top = '40%';
+
+                    leftText.innerHTML = "O Twitter também reage a datas relevantes para a cidade. Centro cultural e social de São Paulo, a Avenida Paulista é palco de manifestações diversas e seus picos de atividades refletem momentos sociais e políticos importantes na dinâmica urbana.<br><br>" +
+                        "São exemplos os seguintes eventos:<br>" +
+                        "Manifestações 7 de Setembro;<br>" +
+                        "Parada Gay 19 de Junho;<br>" +
+                        "Primeiro turno 02 de outoubro;<br>" +
+                        "Segundo turno 30 de outubro."
                 }
             },
             {
@@ -502,11 +531,12 @@
                     map.removeLayer('filtered-data-layer');
                     map.removeSource('filtered-data');
 
-                    displayPointsInPlace(newoQuimicaArenaLocationData, 14)
+                    displayPointsInPlace(newoQuimicaArenaLocationData, 14);
+
+
+                    // TODO: fazer relação com o item anterior
                     leftText.innerHTML = "" +
-                        "A Neo Química Arena, casa do time Corinthians,<br>" +
-                        " representa uma das maiores atividade no Twitter. Um polo pendular, uma vez que o movimento é maior nas quartas e finais de semana, acompanhando a agenda de jogo. " +
-                        ""
+                        "A Neo Química Arena, casa do time Corinthians, representa uma das maiores atividades no Twitter. Aqui temos um exemplo de um polo atrator pendular, uma vez que o maior número de tweets acontece nas quartas-feiras e finais de semana, acompanhando as agendas de jogos do time."
                 }
             },
             {
@@ -549,11 +579,12 @@
                         }
                     });
 
+                    leftTextDiv.style.top = '50%';
 
                     const barBrahmaInitialText = `E por falar em estádios, nada melhor que visitar o Bar Brahma e aproveitar
                     <span id="t1">“samba, chopp e futebol.”</span>
                     num <span id="t2">“#Sabadou”</span>! <br>
-                    Um brinde! Ou melhor <span id="t3">“Prosit!”</span>`;
+                    Um brinde! Ou, em alemão, <span id="t3">“Prosit!”</span>`;
                     leftText.innerHTML = barBrahmaInitialText;
 
 
@@ -563,8 +594,8 @@
                             // color: "hsla(120, 94%, 22%, 1)",
                             color: "#9AB1B1",
                             strokeColor: '#658383',
-                            name: "Fernando",
-                            text: "No dia 2022-05-28 Fernando tweetou,",
+                            name: "Rogério",
+                            text: "Dia 28 de maio Rogério tweetou,",
                         },
                         {
                             id: "t2",
@@ -572,8 +603,8 @@
                             strokeColor: '#39397C',
                             // color: "lightblue",
                             // strokeColor: 'darkblue',
-                            name: "Rogério",
-                            text: "Rogério aproveitou o sábado 19-01-2022",
+                            name: "Fernanda",
+                            text: "em janeiro Fernanda aproveitou seu sábado,",
                         },
                         {
                             id: "t3",
@@ -582,11 +613,11 @@
                             color: "#DAA59A",
                             strokeColor: '#D05864',
                             name: "Lucas",
-                            text: "e em novembro Lucas comemorou.",
+                            text: "e já em novembro Lucas comemorou.",
                         },
                     ];
 
-                    let time_ = 4000;
+                    let time_ = 3000;
 
                     // TEMPORARIO 
                     // let time_ = 1;
@@ -629,7 +660,7 @@
                     }
 
 
-                    protectReduceMotion(action, 3600)
+                    protectReduceMotion(action, 3000)
 
                 }
             },
@@ -686,11 +717,11 @@
 
                         leftText.style.opacity = 1;
                         leftText.innerHTML = `<span style="color:${tweetData[0].strokeColor}">${tweetData[0].name}</span>, ` +
-                            `<span style="color:${tweetData[1].strokeColor}">${tweetData[1].name}</span>, e ` +
-                            `<span style="color:${tweetData[2].strokeColor}">${tweetData[2].name}</span> ` +
-                            `também registraram suas visitas em outros lugares da cidade.<br><br>`
+                            `<span style="color:${tweetData[2].strokeColor}">${tweetData[2].name}</span>, e ` +
+                            `<span style="color:${tweetData[1].strokeColor}">${tweetData[1].name}</span> ` +
+                            `também registraram suas visitas em outros lugares.<br><br><br>`
                         setTimeout(() => {
-                            leftText.innerHTML = leftText.innerHTML.slice(0, -4) + "Assim como outros que visitaram o Bar Brahma."
+                            leftText.innerHTML = leftText.innerHTML.slice(0, -4).slice(0, -4) + `Assim como <span style="color:${paths[3].strokeColor}">outras</span> <span style="color:${paths[4].strokeColor}">pessoas</span><br> que visitaram o Bar Brahma.`
                         }, delay * 3)
 
                         let index = 0;
@@ -749,7 +780,7 @@
                     leftText.style.opacity = 0
 
 
-                    upperLeftText.innerHTML = "Ao compartilhar autores, esses lugares estabelecem uma relação. Todos que estiveram aqui, também estiveram lá, definindo uma Rede de Coinciências, centralizada no ponto de nossa escolha."
+                    upperLeftText.innerHTML = "Ao compartilhar autores, estes lugares estabelecem uma relação entre si. Todos que estiveram aqui, também estiveram lá, construindo uma <b>Rede de Coincidências</b>: uma rede centralizada formada por todos os lugares que compartilham rastros de usuários com um lugar escolhido."
                     upperLeftText.style.opacity = 1;
 
                     // layerRastroLinesIds.forEach(layerId => {
@@ -785,7 +816,7 @@
 
 
                     upperLeftText.innerHTML += "<br><br>"
-                    upperLeftText.innerHTML += "Cada um desses vincúlos possuiu diferentes comprimentos, significando maiores ou menores distâncias entre os lugares relacionados."
+                    upperLeftText.innerHTML += "Cada um desses vincúlos possuiu diferentes comprimentos, demonstrando maiores ou menores distâncias entre os lugares relacionados."
                     //TODO: melhorar texto
 
                     addNetworkLegend();
@@ -806,9 +837,14 @@
 
                     // upperLeftText.style.opacity = 0
 
-                    upperLeftText.innerHTML = "Para então avaliar o quanto do abrangente aquela rede é, podemos utilizar o percentil 75, o qual representa o valor abaixo do qual 75% dos dados estão localizados." +
-                        " Ao mesmo tempo que valoriza valores maiores que a média, também evita que outliers definam a nossa análise." +
-                        "<br> Podemos então cruzar esse valor com a quantidade de autores únicos em um local, inferindo a atratividade de um local."
+                    // upperLeftText.innerHTML = "Para então avaliar o quanto do abrangente aquela rede é, podemos utilizar o percentil 75, o qual representa o valor abaixo do qual 75% dos dados estão localizados." +
+                    //     " Ao mesmo tempo que valoriza valores maiores que a média, também evita que outliers definam a nossa análise." +
+                    //     "<br> Podemos então cruzar esse valor com a quantidade de autores únicos em um local, inferindo a atratividade de um local."
+
+                    upperLeftText.innerHTML = "Para então descrevermos o quão <b>abrangente</b> aquela rede é, escolhemos o valor abaixo do qual 75% dos dados se encontram." +
+                    " Ao mesmo tempo que esse considera valores acima da média, valorizando vincúlos mais extensos, também evita que valores muito altos de exceção definam a nossa análise." +
+                    "<br><br>Cruzamos esse valor com a quantidade de autores únicos em um local, inferindo a <b>atratividade social</b> desse, e projetando-a no mapa."
+                
 
                     // leftText.style.opacity = 1;
 
@@ -823,7 +859,7 @@
 
 
                     setTimeout(() => {
-                        // TODO: adicionar alguma marcação do ponto)
+                     
 
                         // TEMPORARIO COMENTARIO
                         layerRastroPointsIds.forEach(layerId => {
@@ -869,12 +905,14 @@
             },
             {
                 onInit: () => {
+                    upperLeftText.style.opacity = 0;
                     disableForwardButton();
 
                     getSymbolLayers().forEach(l => {
                         map.setPaintProperty(l, 'text-opacity', 1);
                     });
 
+                    // TODO voltar
                     deckOverlayTextAnnotation.finalize();
 
                     Plotly.purge('network-chart');
@@ -906,9 +944,19 @@
 
                     addDeckGL(filteredData, 'network-text-layer-all')
 
-                    upperLeftText.innerHTML = "Esse texto explica um monte de coisa. <br><br> Mapa liberado para interação.";
+                    setTimeout(()=> {
+                        upperLeftText.innerHTML = "A altura das colunas nos mostra a quantidade de usuários individuais que twittaram naquele local, enquanto o degradê de cores nos representa a abrangência da Rede.<br><br>";
+                        upperLeftText.innerHTML += "Podemos então visualizar o quanto um local é capaz de se conectar, através de rastros dos seus visitantes, com locais geograficamente distantes."
+                        upperLeftText.style.opacity = 1;
+
+                        rightText.innerHTML = 'Atratividade social por localização e Redes de Coincidências'
+                        rightText.style.opacity = 1;
+
                         // remove o item do deckGL
-                    deckGLBrahma.finalize();
+                        // TODO voltar
+                        deckGLBrahma.finalize();
+                    }, 2000)
+                    
                         
 
 
@@ -957,22 +1005,23 @@
                 onInit: () => {
                     columnsRadius = 300;
 
-                    var choice = 'Comando da 2ª Região Militar (-23.579597944073882, -46.65751516847958)'
+                    // Alianz
+                    var choice = 'Sao Paulo (-23.52781293, -46.67891512)'
                     networkFromDeckGL(choice, flyTo = false)
-                    // [-46.65751516847958, -23.579597944073882]
 
+                    upperLeftText.innerHTML = 'O Allianz Parque, estádio do Palmeira e palco de shows e eventos, é o ponto com maior números de tweets. '
+                    upperLeftText.innerHTML += 'Sua rede é espraiada em uma ampla área geográfica, que conectam lugares e pessoas de várias regiões.'
+                    
                 }
             },
             {
                 onInit: () => {
-                    var choice = 'Brás (-23.554646, -46.628054)'
-                    networkFromDeckGL(choice, flyTo = false)
-                }
-            },
-            {
-                onInit: () => {
+                    // masp
                     var choice = 'Sao Paulo (-23.56150556, -46.65594625)'
                     networkFromDeckGL(choice, flyTo = false)
+
+                    upperLeftText.innerHTML = 'O MASP também conta com possui uma relativa alta quantidade de usuários tweetando. No entretanto a maioria dos rastros dos visitantes está concentrada à região central, próximo ao museu.'
+
                 }
             },
             {
@@ -980,21 +1029,44 @@
                     var choice = 'Sao Paulo (-23.55100483, -46.64895978)'
                     // Parque Augusta (-23.55017918151177, -46.64921522140503)
                     networkFromDeckGL(choice, flyTo = false)
+                    upperLeftText.innerHTML = 'O Parque Augusta também apresenta um perfil concentrado de relações.'
+                }
+            },       
+            {
+                onInit: () => {
+                    // Itaquera
+                    var choice = 'Sao Paulo (-23.5333, -46.45)';
+                    networkFromDeckGL(choice, flyTo = false)
+                    upperLeftText.innerHTML = 'Uma vez que há uma maioria de tweets na região central, a abrangência da rende tende a ser maior na região periféria. '
+                    upperLeftText.innerHTML += 'Ainda sim conseguimos visualizar a sua dinâmica regional, como em Itaquera, forte polo na cidade e na região.'
+
                 }
             },
             {
                 onInit: () => {
-                    // map.flyTo({
-                    //     zoom: 11.3,
-                    //     center: { lng: -46.669018864493154, lat: -23.582620989869596 },
-                    //     duration: 3000,
-                    //     essencial: true,
-                    //     curve: 1,
-                    //     easing: function (t) {
-                    //         return t;
-                    //     }
-                    // })
+                    var choice = 'Brás (-23.554646, -46.628054)'
+                    networkFromDeckGL(choice, flyTo = false)
+                    upperLeftText.innerHTML = 'Já Brás, mesmo estando em área central e possuindo um número relativamente baixo de autores únicos, demostra uma conexão com lugares distantes do território.'
 
+                }
+            },
+            
+            {
+                onInit: () => {
+
+                    var choice = 'Comando da 2ª Região Militar (-23.579597944073882, -46.65751516847958)'
+                    networkFromDeckGL(choice, flyTo = false)
+
+                    upperLeftText.innerHTML = 'Um exemplo curioso é o Comando da 2ª Região Militar, onde observamos uma quantidade significativa de autores únicos, '
+                    upperLeftText.innerHTML += 'no entanto, comparando com lugares com a mesma quantidade, esses usuários estão se concentrando em locais pouco diversos. Essa situação levanta uma curiosidade sobre os dados: será que estamos lidando realmente como essa quantidade de usuário únicos, ou poucas pessoas, ou quem sabe bots, promovendo muito conteúdo?'
+                    // [-46.65751516847958, -23.579597944073882]
+
+                }
+            },
+            {
+                onInit: () => {
+                    const element = document.getElementById("network-chart");
+                    element.remove();
 
                     function resetDeckGLView() {
                         columnsRadius = 50;
@@ -1007,6 +1079,7 @@
                         });
                     }
 
+                    // TODO esse é o radius mesmo
                     columnsRadius = 80;
                     otherColumnsOpacity = 20;
                     resetDeckGLView();
@@ -1018,9 +1091,26 @@
                     button.addEventListener("click", function () {
                         resetDeckGLView();
                     });
-                    upperLeftText.innerHTML = "Agora é com vc!<br><br>"
+
+                    upperLeftText.innerHTML = null;
+                    var span1 = document.createElement("span");
+
+                    span1.innerHTML = "Agora é com você!<br>Fique à vontade para explorar o mapa e tirar suas próprias conclusões.<br><br>"
+
+                    span1.innerHTML += 'Para visualizar a rede, clique na coluna.<br>Para girar o mapa, clique e arraste o mouse enquanto mantém pressionado o botão direito do mouse ou a tecla Ctrl.<br>Controles também estão disponíveis à direita.'
+                    span1.innerHTML += '<br><br>'
+
+                    var span2 = document.createElement("span");
+                    span2.innerHTML += '<br><br><Br>O Twitter, apesar do seus recorte demográfico, pode ser uma rica base dados para explorarmos nossa cidade. Há uma incrível possibiliade de descoberta e esse projeto é um o convite para essa.'
+                    
+                    upperLeftText.appendChild(span1);
                     upperLeftText.appendChild(button);
+                    upperLeftText.appendChild(span2);
+
+                    
+
                     upperLeftText.style.opacity = 1;
+
 
                 }
             },
@@ -1058,10 +1148,11 @@
 
                         var textBottomContainer = document.createElement('div');
                         textBottomContainer.id = 'final-bottom-text';
-                        textBottomContainer.innerHTML = 'Trabalho Final de Graduação<br>' +
+                        textBottomContainer.innerHTML = 'Trabalho Final de Graduação Arquitetura e Urbanismo USP<br>' +
                             'Roberta Saldanha da Silva Berardo Gomes<br>' +
                             'Orientador Prof. Dr. Leandro Velloso<br>' +
                             '2023';
+                            
                         document.body.appendChild(textBottomContainer);
 
                         setTimeout(() => {
