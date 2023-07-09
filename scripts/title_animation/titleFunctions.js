@@ -123,7 +123,7 @@ function animateTitle() {
                     // console.log(offsetStep)
                     currentOffset[0] += offsetStep[0];
                     currentOffset[1] += offsetStep[1];
-                    console.log(currentOffset)
+                    // console.log(currentOffset)
 
                 }
             }, duration / steps);

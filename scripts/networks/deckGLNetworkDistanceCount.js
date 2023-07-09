@@ -178,6 +178,7 @@ var deckOverlayTextAnnotation;
 function addDeckGLAnnotation(data) {
   deckOverlayTextAnnotation = new deck.MapboxOverlay({
     layers: [
+      // necessário para funcionar o characterset, por algum bug
       new deck.TextLayer({
         id: 'text-layer',
         data,
@@ -188,8 +189,25 @@ function addDeckGLAnnotation(data) {
         getAngle: 0,
         fontFamily: 'Lora',
         getTextAnchor: 'middle',
+        getColor: [113, 57, 28, 0],
+        getAlignmentBaseline: 'bottom',
+       
+      }),
+
+      new deck.TextLayer({
+        id: 'text-layer',
+        data,
+        pickable: true,
+        getPosition: d => [d.lon, d.lat, d.count_un_a * 30],
+        getText: d => 'cor:\nabrang\u00eancia da\n rede',
+        getSize: 10,
+        getAngle: 0,
+        fontFamily: 'Lora',
+        getTextAnchor: 'middle',
         getColor: [113, 57, 28],
-        getAlignmentBaseline: 'bottom'
+        getAlignmentBaseline: 'bottom',
+        characterSet: ['\u00ea'],
+       
       }),
 
       new deck.TextLayer({

@@ -11,7 +11,6 @@ function displayPointsInPlace(geojsonPlace, zoom) {
 
   // Extracting the coordinates
   var centerCoordinates = center.geometry.coordinates;
-  console.log(centerCoordinates);
 
   // Assuming you have a Mapbox GL map instance created with the variable `map`
   map.flyTo({
