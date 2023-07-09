@@ -501,7 +501,7 @@
 
                     leftText.innerHTML = "Bairros centrais são, em geral, os mais movimentados no Twitter, mas aproximando nosso olhar, notamos diferenças nessa distribuição. " +
                     "Pinheiros e Vila Madalena são marcados por um dinamismo social, com bares, restaurantes, refletido no Twitter. " +
-                    "Porém ao lado, o Jardim Eropa, bairro predominantemente residencial, aparece como um vazio nos dados."
+                    "Porém ao lado, o Jardim Europa, bairro predominantemente residencial, aparece como um vazio nos dados."
 
 
                 }
@@ -741,34 +741,6 @@
                     }, 2500)
 
 
-                    // map.once('moveend', () => {
-                    //     const delay = 2500; // Delay of 1 second (1000 milliseconds)
-
-                    //     leftText.style.opacity = 1;
-                    //     leftText.innerHTML = `<span style="color:${tweetData[0].strokeColor}">${tweetData[0].name}</span>, ` +
-                    //         `<span style="color:${tweetData[1].strokeColor}">${tweetData[1].name}</span>, e ` +
-                    //         `<span style="color:${tweetData[2].strokeColor}">${tweetData[2].name}</span> ` +
-                    //         `também registraram suas visitas em outros lugares da cidade.<br><br>`
-                    //     setTimeout(() => {
-                    //         leftText.innerHTML = leftText.innerHTML.slice(0, -4) + "Assim como outros que visitaram o Bar Brahma."
-                    //     }, delay * 3)
-
-                    //     let index = 0;
-
-                    //     function addPathWithDelay() {
-                    //         if (index < paths.length) {
-                    //             const { path, color, strokeColor } = paths[index];
-                    //             addPathFromUser(path, color, strokeColor);
-                    //             index++;
-                    //             setTimeout(addPathWithDelay, delay);
-                    //         } else if (index === paths.length) {
-                    //             enableForwardButton();
-                    //         }
-                    //     }
-
-                    //     addPathWithDelay();
-                    // });
-
                 }
 
 
@@ -799,7 +771,6 @@
                     layerRastroPointsIds.forEach(layerId => {
                         map.setPaintProperty(layerId, 'circle-color', brownColor)
                     });
-                    // fadeOutLayer('network-lines-layer-brahma', 2000);
 
                 }
 
@@ -1020,7 +991,7 @@
                     var choice = 'Sao Paulo (-23.56150556, -46.65594625)'
                     networkFromDeckGL(choice, flyTo = false)
 
-                    upperLeftText.innerHTML = 'O MASP também conta com possui uma relativa alta quantidade de usuários tweetando. No entretanto a maioria dos rastros dos visitantes está concentrada à região central, próximo ao museu.'
+                    upperLeftText.innerHTML = 'O MASP também conta com uma relativa alta quantidade de usuários tweetando. No entretanto a maioria dos rastros dos visitantes está concentrada à região central, próximo ao museu.'
 
                 }
             },
@@ -1103,7 +1074,7 @@
                     span1.innerHTML += '<br><br>'
 
                     var span2 = document.createElement("span");
-                    span2.innerHTML += '<br><br><Br>O Twitter, apesar do seus recorte demográfico, pode ser uma rica base dados para explorarmos nossa cidade. Há uma incrível possibiliade de descoberta e esse projeto é um o convite para essa.'
+                    span2.innerHTML += '<br><br><Br>O Twitter, apesar do seu recorte demográfico, pode ser uma rica base dados para explorarmos nossa cidade. Há uma incrível possibiliade de descoberta e esse projeto é um o convite para essa.'
                     
                     upperLeftText.appendChild(span1);
                     upperLeftText.appendChild(button);
