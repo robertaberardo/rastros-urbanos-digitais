@@ -467,7 +467,7 @@ function annotateNetworkChart() {
 
 	length_ = colors.length
 	opacity_ = Array(length_).fill(0.1)
-	opacity_[index75] = 1
+	opacity_[index75-1] = 1
 
 	var updateStyle = {
 		marker: {
