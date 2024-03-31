@@ -287,14 +287,18 @@
 
         #final-bottom-text {
             position: fixed;
-            bottom: 10%;
+            bottom: 20px;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%);
             opacity: 0;
             font-size: medium;
             transition: opacity 5s ease-in-out;
             text-align: center;
-            color: #8aa4b5
+            color: #8aa4b5;
+        }
+
+        #final-bottom-text span {
+            background-color: rgb(232 227 223 / 60%);
         }
 
         .reset-button {
@@ -445,7 +449,7 @@
                     animateTweetsByDate();
                     enableForwardButtonOnDataIdle();
 
-                    leftText.innerText = 'Esse dado geográfico pode ser extraído permitindo que ele seja projetado no território.'
+                    leftText.innerText = 'Esse dado geográfico pode ser extraído e projetado no território.'
   
                     rightText.style.opacity =1;
                     rightText.innerText = 'Tweets de Janeiro de 2022'
@@ -500,7 +504,7 @@
 
 
                     leftText.innerHTML = "Bairros centrais são, em geral, os mais movimentados no Twitter, mas aproximando nosso olhar, notamos diferenças nessa distribuição. " +
-                    "Pinheiros e Vila Madalena são marcados por um dinamismo social, com bares, restaurantes, refletido no Twitter. " +
+                    "Pinheiros e Vila Madalena são marcados por um dinamismo social, com bares e restaurantes, refletido no Twitter. " +
                     "Porém ao lado, o Jardim Europa, bairro predominantemente residencial, aparece como um vazio nos dados."
 
 
@@ -536,7 +540,7 @@
 
                     // TODO: fazer relação com o item anterior
                     leftText.innerHTML = "" +
-                        "A Neo Química Arena, casa do time Corinthians, representa uma das maiores atividades no Twitter. Aqui temos um exemplo de um polo atrator pendular, uma vez que o maior número de tweets acontece nas quartas-feiras e finais de semana, acompanhando as agendas de jogos do time."
+                        "A Neo Química Arena, casa do time Corinthians, representa uma das maiores atividades no Twitter. Aqui temos um exemplo de um polo atrator pendular, uma vez que o maior número de tweets acontece nas quartas-feiras e finais de semana, acompanhando a agenda de jogos do time."
                 }
             },
             {
@@ -581,7 +585,7 @@
 
                     leftTextDiv.style.top = '50%';
 
-                    const barBrahmaInitialText = `E por falar em estádios, nada melhor que visitar o Bar Brahma e aproveitar
+                    const barBrahmaInitialText = `Por falar em estádios, nada melhor que visitar o Bar Brahma e aproveitar
                     <span id="t1">“samba, chopp e futebol.”</span>
                     num <span id="t2">“#Sabadou”</span>! <br>
                     Um brinde! Ou, em alemão, <span id="t3">“Prosit!”</span>`;
@@ -752,7 +756,7 @@
                     leftText.style.opacity = 0
 
 
-                    upperLeftText.innerHTML = "Ao compartilhar autores, estes lugares estabelecem uma relação entre si. Todos que estiveram aqui, também estiveram lá, construindo uma <b>Rede de Coincidências</b>: uma rede centralizada formada por todos os lugares que compartilham rastros de usuários com um lugar escolhido."
+                    upperLeftText.innerHTML = "Ao compartilhar autores, estes lugares estabelecem uma relação entre si. Todos que estiveram aqui também estiveram lá, construindo uma <b>Rede de Coincidências</b>: uma rede centralizada formada por todos os lugares que compartilham rastros de usuários com um lugar escolhido."
                     upperLeftText.style.opacity = 1;
 
                     // layerRastroLinesIds.forEach(layerId => {
@@ -814,7 +818,7 @@
 
                     upperLeftText.innerHTML = "Para então descrevermos o quão <b>abrangente</b> aquela rede é, escolhemos o valor abaixo do qual 75% dos dados se encontram." +
                     " Ao mesmo tempo que esse considera valores acima da média, valorizando vincúlos mais extensos, também evita que valores muito altos de exceção definam a nossa análise." +
-                    "<br><br>Cruzamos esse valor com a quantidade de autores únicos em um local, inferindo a <b>atratividade social</b> desse, e projetando-a no mapa."
+                    "<br><br>Cruzamos esse valor com a quantidade de autores únicos em um local, inferindo a <b>atratividade social</b> desse e projetando-a no mapa."
                 
 
                     // leftText.style.opacity = 1;
@@ -991,7 +995,7 @@
                     var choice = 'Sao Paulo (-23.56150556, -46.65594625)'
                     networkFromDeckGL(choice, flyTo = false)
 
-                    upperLeftText.innerHTML = 'O MASP também conta com uma relativa alta quantidade de usuários tweetando. No entretanto a maioria dos rastros dos visitantes está concentrada à região central, próximo ao museu.'
+                    upperLeftText.innerHTML = 'O MASP também conta com uma relativa alta quantidade de usuários tweetando. No entanto, a maioria dos rastros dos visitantes está concentrada na região central, próximo ao museu.'
 
                 }
             },
@@ -1008,7 +1012,7 @@
                     // Itaquera
                     var choice = 'Sao Paulo (-23.5333, -46.45)';
                     networkFromDeckGL(choice, flyTo = false)
-                    upperLeftText.innerHTML = 'Uma vez que há uma maioria de tweets na região central, a abrangência da rende tende a ser maior na região periféria. '
+                    upperLeftText.innerHTML = 'Uma vez que há uma maioria de tweets na região central, a abrangência da rede tende a ser maior na região periférica. '
                     upperLeftText.innerHTML += 'Ainda sim conseguimos visualizar a sua dinâmica regional, como em Itaquera, forte polo na cidade e na região.'
 
                 }
@@ -1017,7 +1021,7 @@
                 onInit: () => {
                     var choice = 'Brás (-23.554646, -46.628054)'
                     networkFromDeckGL(choice, flyTo = false)
-                    upperLeftText.innerHTML = 'Já Brás, mesmo estando em área central e possuindo um número relativamente baixo de autores únicos, demostra uma conexão com lugares distantes do território.'
+                    upperLeftText.innerHTML = 'Já o Brás, mesmo estando em área central e possuindo um número relativamente baixo de autores únicos, demostra uma conexão com lugares distantes do território.'
 
                 }
             },
@@ -1029,7 +1033,7 @@
                     networkFromDeckGL(choice, flyTo = false)
 
                     upperLeftText.innerHTML = 'Um exemplo curioso é o Comando da 2ª Região Militar, onde observamos uma quantidade significativa de autores únicos, '
-                    upperLeftText.innerHTML += 'no entanto, comparando com lugares com a mesma quantidade, esses usuários estão se concentrando em locais pouco diversos. Essa situação levanta uma curiosidade sobre os dados: será que estamos lidando realmente como essa quantidade de usuário únicos, ou poucas pessoas, ou quem sabe bots, promovendo muito conteúdo?'
+                    upperLeftText.innerHTML += 'no entanto, comparando com lugares com a mesma quantidade, esses usuários se concentram em locais pouco diversos. Essa situação levanta uma pergunta sobre os dados: será que estamos lidando realmente como essa quantidade de usuários únicos, ou poucas pessoas, ou quem sabe bots, promovendo muito conteúdo?'
                     // [-46.65751516847958, -23.579597944073882]
 
                 }
@@ -1121,10 +1125,37 @@
 
                         var textBottomContainer = document.createElement('div');
                         textBottomContainer.id = 'final-bottom-text';
-                        textBottomContainer.innerHTML = 'Trabalho Final de Graduação Arquitetura e Urbanismo USP<br>' +
+
+                        var link1 = document.createElement('a');
+                        link1.href = 'https://www.informationisbeautifulawards.com/showcase/6286-rastros-urbanos-digitais-urban-digital-traces';
+                        link1.target="_blank";
+                        var img1 = document.createElement('img');
+                        img1.src = 'assets/2023 IIB Awards Badge_Longlist.png';
+                        img1.alt = '2023 IIB Awards | Data Visualization Society';
+                        img1.style.height = '75px';
+                        img1.style.marginRight = '20px';
+                        img1.style.opacity = '0.75';
+
+                        link1.appendChild(img1);
+
+                        var link2 = document.createElement('a');
+                        link2.href = 'https://www.archdaily.com.br/br/1010832/os-melhores-trabalhos-de-conclusao-de-curso-em-2023'; 
+                        link2.target="_blank";
+                        var img2 = document.createElement('img');
+                        img2.src = 'assets/os-melhores-trabalhos-de-conclusao-de-curso-em-2023_4.jpg';
+                        img2.alt = 'Melhores Trabalhos de Conclusão de Curso 2023 | Archdaily';
+                        img2.style.height = '75px'; // Set height of image
+                        img2.style.opacity = '0.75'; // Set opacity of image
+                        link2.appendChild(img2);
+
+                        textBottomContainer.appendChild(link1);
+                        textBottomContainer.appendChild(link2);
+                        textBottomContainer.innerHTML += '<br><span>' + 
+                            'Trabalho Final de Graduação Arquitetura e Urbanismo USP<br>' +
                             'Roberta Saldanha da Silva Berardo Gomes<br>' +
                             'Orientador Prof. Dr. Leandro Velloso<br>' +
-                            '2023';
+                            '2023' +
+                            '</span>';
                             
                         document.body.appendChild(textBottomContainer);
 
